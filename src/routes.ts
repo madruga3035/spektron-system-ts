@@ -26,7 +26,19 @@ routes.use(authMiddleware);
 routes.get('/admin/users', checkRole(['ADMIN']), userController.index);
 
 // ADMIN e TECHNICIAN
-routes.post('/records', checkRole(['ADMIN', 'TECHNICIAN']), recordController.store);
-routes.get('/records', checkRole(['ADMIN', 'TECHNICIAN']), recordController.index);
+routes.post('/records', checkRole(['ADMIN', 'TECHNICIAN' , 'USER']), recordController.store);
+routes.get('/records', checkRole(['ADMIN', 'TECHNICIAN', 'USER']), recordController.index);
+
+// Somente ADMIN pode deletar registros
+routes.delete('/records/:id', checkRole(['ADMIN']), recordController.delete);
+
+// ADMIN e USER podem editar (a lógica dentro do controller filtra quem é o dono)
+routes.put('/records/:id', checkRole(['ADMIN', 'TECHNICIAN', 'USER']), recordController.update);
+
+// Edição de perfil (O controller garante que USER só edite a si mesmo)
+routes.put('/users/:id', userController.update);
+
+// Deleção/Desativação (Somente ADMIN)
+routes.delete('/users/:id', checkRole(['ADMIN']), userController.delete);
 
 export { routes };

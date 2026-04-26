@@ -43,4 +43,64 @@ export class UserController {
       return res.status(500).json({ error: "Erro ao criar usuário." });
     }
   }
+  async update(req: Request, res: Response) {
+    const id = req.params.id as string;  // ID do usuário a ser editado
+    const { name, email, password, role } = req.body;
+    const loggedUserId = (req as any).userId as string;
+    const loggedUserRole = (req as any).userRole;
+
+    try {
+    // 1. Verificação de permissão (Dono ou Admin)
+      if (loggedUserRole !== 'ADMIN' && loggedUserId !== id) {
+        return res.status(403).json({ error: "Acesso negado: você só pode editar seu próprio perfil." });
+      }
+
+      // 2. Montamos o objeto de atualização apenas com o que foi enviado
+      // Isso evita que campos não enviados sejam sobrescritos com null ou undefined
+      const updateData: any = {};
+
+      if (name) updateData.name = name;
+      if (email) updateData.email = email;
+      if (role && loggedUserRole === 'ADMIN') updateData.role = role; // Só Admin muda cargo
+
+      // 3. Tratamento especial para a senha
+      if (password) {
+        updateData.password = await bcrypt.hash(password, 10);
+      }
+
+      // 4. Executa o update no Prisma
+      const updatedUser = await prisma.user.update({
+        where: { id: id as string },
+        data: updateData
+      });
+
+      // 5. Retorno seguro (sem a senha)
+      const { password: _, ...userWithoutPassword } = updatedUser;
+      return res.json(userWithoutPassword);
+
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao atualizar usuário. Verifique se o e-mail já existe." });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    const id = req.params.id as string;
+
+    try {
+      // Apenas marcamos como excluído para não quebrar o histórico de registros (Soft Delete)
+      await prisma.user.update({
+        where: { id },
+        data: { 
+          deletedAt: new Date(),
+          // Se você não tiver 'deletedAt' na tabela User, use um campo 'active: false'
+          // Ou adicione o campo 'deletedAt' no seu schema.prisma para usuários também
+          role: 'INACTIVE' // Uma alternativa simples se não quiser mexer no schema agora
+        }
+      });
+
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao desativar usuário." });
+    }
+  }
 }
