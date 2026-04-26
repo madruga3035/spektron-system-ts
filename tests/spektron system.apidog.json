@@ -1,0 +1,1286 @@
+{
+  "apidogProject": "1.0.0",
+  "$schema": {
+    "app": "apidog",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "spektron system",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "projectSetting": {
+    "id": "1269536",
+    "auth": {},
+    "securityScheme": {},
+    "gateway": [],
+    "language": "pt-BR",
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "mockSettings": {},
+    "preProcessors": [],
+    "postProcessors": [],
+    "advancedSettings": {
+      "enableJsonc": false,
+      "enableBigint": false,
+      "responseValidate": true,
+      "enableTestScenarioSetting": false,
+      "enableYAPICompatScript": false,
+      "isDefaultUrlEncoding": 3,
+      "publishedDocUrlRules": {
+        "defaultRule": "SLUGIFY_WITH_RESOURCE_KEY",
+        "resourceKeyStandard": "NEW"
+      }
+    },
+    "initialDisabledMockIds": [],
+    "servers": [
+      {
+        "id": "default",
+        "name": "Servidor Padrão",
+        "moduleId": 1228008
+      }
+    ],
+    "cloudMock": {
+      "security": "free",
+      "enable": false,
+      "tokenKey": "apidogToken"
+    }
+  },
+  "apiCollection": [
+    {
+      "name": "Root",
+      "id": 8127745,
+      "auth": {},
+      "securityScheme": {},
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "identityPattern": {
+        "httpApi": {
+          "type": "methodAndPath",
+          "bodyType": "",
+          "fields": []
+        }
+      },
+      "shareSettings": {},
+      "visibility": "SHARED",
+      "moduleId": 1228008,
+      "preProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "postProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "inheritPostProcessors": {},
+      "inheritPreProcessors": {},
+      "items": [
+        {
+          "name": "cadastro de usuario",
+          "api": {
+            "id": "34178498",
+            "method": "post",
+            "path": "https://spektron-system.onrender.com/register",
+            "parameters": {
+              "header": [
+                {
+                  "required": false,
+                  "description": "",
+                  "type": "string",
+                  "id": "YV8Va3G7m7",
+                  "example": "{{daily_token_variable}}",
+                  "enable": true,
+                  "name": "x-daily-token"
+                }
+              ]
+            },
+            "auth": {},
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "158278709",
+                "code": 200,
+                "name": "Sucesso",
+                "headers": [],
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "description": "",
+                "contentType": "json",
+                "mediaType": ""
+              }
+            ],
+            "responseExamples": [
+              {
+                "name": "Criado",
+                "data": "{\"id\":\"3b20c4d8-21bc-4b66-9264-b9723699050b\",\"email\":\"marcos@teste.com\",\"name\":\"Marcos\",\"createdAt\":\"2026-04-25T21:11:53.713Z\"}",
+                "responseId": "158278709"
+              }
+            ],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "required": true,
+              "mediaType": "",
+              "examples": [
+                {
+                  "mediaType": "application/json",
+                  "value": "{\r\n  \"name\": \"Marcos Administrador\",\r\n  \"email\": \"admin@spektron.com\",\r\n  \"password\": \"senha_mestra_nova\",\r\n  \"role\": \"ADMIN\"\r\n}"
+                }
+              ],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 10,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [
+              {
+                "type": "customScript",
+                "data": "// Apidog já possui a biblioteca CryptoJS embutida\r\nconst crypto = require('crypto-js');\r\n\r\n// 1. Defina a mesma SECRET_KEY que está no seu .env\r\nconst MY_SECRET = \"sua_chave_secreta_super_aleatoria_aqui_123\"; \r\n\r\n// 2. Obtém a data atual (YYYY-MM-DD)\r\nconst today = new Date().toISOString().split('T')[0];\r\n\r\n// 3. Gera o hash\r\nconst seed = `${today}-${MY_SECRET}`;\r\nconst hash = crypto.SHA256(seed).toString(crypto.enc.Hex);\r\n\r\n// 4. Pega os 8 primeiros caracteres\r\nconst dailyToken = hash.substring(0, 8).toUpperCase();\r\n\r\n// 5. Salva em uma variável temporária do Apidog\r\npm.variables.set(\"daily_token_variable\", dailyToken);\r\n\r\nconsole.log(\"Token gerado para hoje: \" + dailyToken);",
+                "defaultEnable": false,
+                "enable": true,
+                "id": "d0KHmyD874OVBFb3qOpCB",
+                "executionTiming": "prerequest"
+              }
+            ],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Login para receber Token",
+          "api": {
+            "id": "34216643",
+            "method": "post",
+            "path": "/login",
+            "parameters": {},
+            "auth": {},
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "109932367",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [
+              {
+                "name": "Correto",
+                "data": "{\"user\":{\"id\":\"5facc28d-bb11-4d12-9bde-e7ee3aee14e5\",\"name\":\"Marcos Administrador\",\"email\":\"admin@spektron.com\",\"role\":\"ADMIN\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmFjYzI4ZC1iYjExLTRkMTItOWJkZS1lN2VlM2FlZTE0ZTUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzcyNDI5NDIsImV4cCI6MTc3NzMyOTM0Mn0.JHq7T9raGVATAxclA_1jLCWC7k4QCiOpY_VYtKaktqE\"}",
+                "responseId": "109932367"
+              }
+            ],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "required": true,
+              "mediaType": "",
+              "examples": [
+                {
+                  "mediaType": "application/json",
+                  "value": "{\r\n    \"email\": \"admin@spektron.com\",\r\n    \"password\": \"senha_mestra_nova\"\r\n}"
+                }
+              ],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 60,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Lista de usuarios",
+          "api": {
+            "id": "34216668",
+            "method": "get",
+            "path": "/admin/users",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmFjYzI4ZC1iYjExLTRkMTItOWJkZS1lN2VlM2FlZTE0ZTUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzcyNDI5OTQsImV4cCI6MTc3NzMyOTM5NH0.03JEdvsb6svORiaTitVfEsGBdfp26b_M2ObI90rl5Uk"
+              }
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "172111751",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [
+              {
+                "name": "Correto",
+                "data": "[{\"id\":\"fcb8459b-813d-45fa-998a-6ef7d4aadea0\",\"name\":\"Marcoveio7\",\"email\":\"marcoveio7@teste.com\",\"role\":\"USER\",\"createdAt\":\"2026-04-26T22:25:34.728Z\"},{\"id\":\"5facc28d-bb11-4d12-9bde-e7ee3aee14e5\",\"name\":\"Marcos Administrador\",\"email\":\"admin@spektron.com\",\"role\":\"ADMIN\",\"createdAt\":\"2026-04-26T22:33:44.129Z\"}]",
+                "responseId": "172111751"
+              }
+            ],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 70,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "listar itens usuario",
+          "api": {
+            "id": "34179876",
+            "method": "get",
+            "path": "/records",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmFjYzI4ZC1iYjExLTRkMTItOWJkZS1lN2VlM2FlZTE0ZTUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzcyNDI5OTQsImV4cCI6MTc3NzMyOTM5NH0.03JEdvsb6svORiaTitVfEsGBdfp26b_M2ObI90rl5Uk"
+              }
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "171379761",
+                "code": 401,
+                "name": "Sucesso",
+                "headers": [],
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "itemSchema": {},
+                "description": "",
+                "contentType": "json",
+                "mediaType": ""
+              }
+            ],
+            "responseExamples": [
+              {
+                "name": "Sucesso",
+                "data": "{\"error\":\"Token inválido ou expirado.\"}",
+                "responseId": "171379761"
+              }
+            ],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 20,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Escrever dados no BD",
+          "api": {
+            "id": "34216672",
+            "method": "post",
+            "path": "/records",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmFjYzI4ZC1iYjExLTRkMTItOWJkZS1lN2VlM2FlZTE0ZTUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzcyNDI5OTQsImV4cCI6MTc3NzMyOTM5NH0.03JEdvsb6svORiaTitVfEsGBdfp26b_M2ObI90rl5Uk"
+              }
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "191721777",
+                "code": 200,
+                "name": "Sucesso",
+                "headers": [],
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "description": "",
+                "contentType": "json",
+                "mediaType": ""
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "required": true,
+              "mediaType": "",
+              "examples": [
+                {
+                  "mediaType": "application/json",
+                  "value": "{\r\n  \"description\": \"Instalação de Câmera IP teste\",\r\n  \"value\": 500.0\r\n}"
+                }
+              ],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 80,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Ler dados no BD por usuario",
+          "api": {
+            "id": "34216673",
+            "method": "get",
+            "path": "/records",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmFjYzI4ZC1iYjExLTRkMTItOWJkZS1lN2VlM2FlZTE0ZTUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzcyNDI5OTQsImV4cCI6MTc3NzMyOTM5NH0.03JEdvsb6svORiaTitVfEsGBdfp26b_M2ObI90rl5Uk"
+              }
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "191721777",
+                "code": 200,
+                "name": "Sucesso",
+                "headers": [],
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "description": "",
+                "contentType": "json",
+                "mediaType": ""
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "type": "object",
+                "properties": {}
+              },
+              "required": true,
+              "mediaType": "",
+              "examples": [
+                {
+                  "mediaType": "application/json",
+                  "value": ""
+                }
+              ],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 86,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Editar usuario",
+          "api": {
+            "id": "34216816",
+            "method": "put",
+            "path": "/users/id_do_usuario",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {}
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "186740149",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 96,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Deletar usuarios ( somente adms tem acesso)",
+          "api": {
+            "id": "34216819",
+            "method": "delete",
+            "path": "/users/id_do_usuario",
+            "parameters": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": {}
+            },
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "143257400",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 106,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "Atualizar infos dos serviços por usuario",
+          "api": {
+            "id": "34216863",
+            "method": "put",
+            "path": "/records/id_do_serviço_para_atualizar",
+            "parameters": {},
+            "auth": {},
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "126397923",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 116,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        },
+        {
+          "name": "deleta ordens de serviço somente adms podem acessar",
+          "api": {
+            "id": "34216873",
+            "method": "delete",
+            "path": "/records/id_do_serviço_para_deletar",
+            "parameters": {},
+            "auth": {},
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "119184726",
+                "code": 200,
+                "name": "Sucesso",
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "itemSchema": {},
+                "contentType": "json"
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "none",
+              "parameters": [],
+              "required": true,
+              "mediaType": "",
+              "examples": [],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 126,
+            "cases": [],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 1228008,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        }
+      ]
+    }
+  ],
+  "socketCollection": [],
+  "docCollection": [],
+  "webSocketCollection": [],
+  "socketIOCollection": [],
+  "mcpClientCollection": [],
+  "responseCollection": [
+    {
+      "_databaseId": 1494334,
+      "updatedAt": "2026-04-25T21:07:53.000Z",
+      "name": "Root",
+      "type": "root",
+      "children": [],
+      "moduleId": 1228008,
+      "parentId": 0,
+      "id": 1494334,
+      "ordering": [],
+      "items": []
+    }
+  ],
+  "schemaCollection": [
+    {
+      "id": 3345051,
+      "name": "Root",
+      "visibility": "SHARED",
+      "moduleId": 1228008,
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "securitySchemeCollection": [
+    {
+      "id": 1298556,
+      "moduleId": 1228008,
+      "name": "Root",
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "oasComponentCollection": [],
+  "requestCollection": [
+    {
+      "name": "Root",
+      "children": [],
+      "items": [
+        {
+          "id": 697053,
+          "createdAt": "2026-04-25T21:22:12.000Z",
+          "updatedAt": "2026-04-25T21:30:05.000Z",
+          "name": "http://localhost:3333/login",
+          "method": "post",
+          "path": "http://localhost:3333/login",
+          "requestBody": {
+            "type": "application/json",
+            "parameters": [],
+            "jsonSchema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            },
+            "example": "{\r\n  \"email\": \"marcos@teste.com\",\r\n  \"password\": \"123\"\r\n}",
+            "data": "{\r\n  \"email\": \"marcos@teste.com\",\r\n  \"password\": \"123\"\r\n}"
+          },
+          "parameters": {},
+          "commonParameters": {
+            "query": [],
+            "body": [],
+            "header": [],
+            "cookie": []
+          },
+          "preProcessors": [],
+          "postProcessors": [
+            {
+              "type": "extractor",
+              "data": {
+                "variableName": "token",
+                "variableType": "environment",
+                "subject": "responseJson",
+                "extractRange": "partial",
+                "extractSettings": {
+                  "expression": "",
+                  "continueExtractorSettings": {
+                    "isContinueExtractValue": false,
+                    "JsonArrayValueIndexValue": ""
+                  }
+                }
+              },
+              "defaultEnable": false,
+              "enable": true
+            }
+          ],
+          "auth": {},
+          "advancedSettings": {
+            "disabledSystemHeaders": {}
+          },
+          "folderId": 0,
+          "projectId": 1269469,
+          "creatorId": 956238,
+          "editorId": 956238
+        },
+        {
+          "id": 697054,
+          "createdAt": "2026-04-25T21:29:58.000Z",
+          "updatedAt": "2026-04-25T21:29:58.000Z",
+          "name": "http://localhost:3333/records",
+          "method": "post",
+          "path": "http://localhost:3333/records",
+          "requestBody": {
+            "type": "application/json",
+            "jsonSchema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "description",
+                "value"
+              ]
+            },
+            "example": "{\r\n  \"description\": \"Instalação de Câmera IP\",\r\n  \"value\": 450.0\r\n}",
+            "data": "{\r\n  \"description\": \"Instalação de Câmera IP\",\r\n  \"value\": 450.0\r\n}"
+          },
+          "parameters": {},
+          "commonParameters": {
+            "query": [],
+            "body": [],
+            "header": [],
+            "cookie": []
+          },
+          "preProcessors": [],
+          "postProcessors": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": {
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjIwYzRkOC0yMWJjLTRiNjYtOTI2NC1iOTcyMzY5OTA1MGIiLCJpYXQiOjE3NzcxNTIxMTUsImV4cCI6MTc3NzIzODUxNX0.R-asFwTxYnxyRju60l39ws8B9VkXMa_xzaf6Ff4jmJc"
+            }
+          },
+          "advancedSettings": {},
+          "folderId": 0,
+          "projectId": 1269469,
+          "creatorId": 956238,
+          "editorId": 956238
+        },
+        {
+          "id": 697055,
+          "createdAt": "2026-04-25T21:36:23.000Z",
+          "updatedAt": "2026-04-26T00:33:47.000Z",
+          "name": "http://localhost:3333/records",
+          "method": "get",
+          "path": "https://spektron-system.onrender.com/records",
+          "requestBody": {
+            "type": "none",
+            "parameters": []
+          },
+          "parameters": {},
+          "commonParameters": {
+            "query": [],
+            "body": [],
+            "header": [],
+            "cookie": []
+          },
+          "preProcessors": [],
+          "postProcessors": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": {
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjIwYzRkOC0yMWJjLTRiNjYtOTI2NC1iOTcyMzY5OTA1MGIiLCJpYXQiOjE3NzcxNTIxMTUsImV4cCI6MTc3NzIzODUxNX0.R-asFwTxYnxyRju60l39ws8B9VkXMa_xzaf6Ff4jmJc"
+            }
+          },
+          "advancedSettings": {},
+          "folderId": 0,
+          "projectId": 1269469,
+          "creatorId": 956238,
+          "editorId": 956238
+        }
+      ]
+    }
+  ],
+  "apiTestCaseCollection": [
+    {
+      "id": 0,
+      "name": "Root",
+      "children": [],
+      "items": []
+    }
+  ],
+  "testCaseReferences": [],
+  "environments": [
+    {
+      "name": "Amb. de Desenv.",
+      "requestProxyAgentSettings": {},
+      "variables": [],
+      "parameters": {
+        "cookie": [],
+        "query": [],
+        "header": [],
+        "body": []
+      },
+      "type": "normal",
+      "visibility": "protected",
+      "ordering": 0,
+      "tags": [
+        {
+          "name": "",
+          "color": "#9373EE"
+        }
+      ],
+      "advancedSettings": {},
+      "id": "6050268",
+      "baseUrl": "https://spektron-system.onrender.com",
+      "baseUrls": {
+        "1228008": "https://spektron-system.onrender.com"
+      },
+      "socketioBaseUrls": {},
+      "websocketBaseUrls": {}
+    }
+  ],
+  "commonScripts": [],
+  "databaseConnections": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "customFunctions": [],
+  "projectTestCaseCategories": [
+    {
+      "id": 1272905,
+      "name": "Positivo",
+      "description": "Entradas válidas e resultados esperados corretos, representando um uso típico."
+    },
+    {
+      "id": 1272906,
+      "name": "Negativo",
+      "description": "Entradas negativas ou inválidas, como campos ausentes, tipos incorretos, métodos não suportados etc."
+    },
+    {
+      "id": 1272907,
+      "name": "Limite",
+      "description": "Condições extremas ou de limite, como comprimento máximo de string, valores vazios, zero, null etc."
+    },
+    {
+      "id": 1272908,
+      "name": "Segurança",
+      "description": "Casos que podem expor riscos de segurança da API."
+    },
+    {
+      "id": 1272909,
+      "name": "Outros",
+      "description": "Casos não classificados nas categorias existentes."
+    }
+  ],
+  "projectTestCaseTags": [
+    {
+      "id": 5596069,
+      "name": "Somente campos obrigatórios",
+      "description": "Enviar apenas os campos obrigatórios com valores válidos, omitindo todos os opcionais, para testar a requisição mínima válida."
+    },
+    {
+      "id": 5596070,
+      "name": "Semântica válida",
+      "description": "Usar valores sintaticamente corretos que também façam sentido na lógica de negócio ou no contexto do domínio."
+    },
+    {
+      "id": 5596071,
+      "name": "Cobertura de combinações de enum",
+      "description": "Para todos os parâmetros do tipo enum, aplicar design ortogonal para construir sistematicamente combinações de casos de teste dos parâmetros e de seus valores de enum, dedicadas a testar a cobertura de enums."
+    },
+    {
+      "id": 5596072,
+      "name": "Outro caso positivo",
+      "description": "Fornecer entradas realistas e válidas que atendam à especificação da API, produzindo o resultado correto e esperado."
+    },
+    {
+      "id": 5596073,
+      "name": "Campos obrigatórios ausentes",
+      "description": "Omitir um ou mais campos obrigatórios no corpo ou nos parâmetros da requisição."
+    },
+    {
+      "id": 5596074,
+      "name": "Valores inválidos",
+      "description": "Fornecer valores com tipo e formato corretos, mas logicamente inválidos para o campo."
+    },
+    {
+      "id": 5596075,
+      "name": "Erros de tipo",
+      "description": "Usar valores com tipos de dados incorretos, como enviar uma string em vez de um inteiro."
+    },
+    {
+      "id": 5596076,
+      "name": "Erros de formato",
+      "description": "Fornecer valores em formato incorreto, por exemplo, padrão de data errado ou endereço de e-mail malformado."
+    },
+    {
+      "id": 5596077,
+      "name": "Erros semânticos",
+      "description": "Usar valores sintática e formalmente corretos que sejam logicamente impossíveis ou violem regras do domínio."
+    },
+    {
+      "id": 5596078,
+      "name": "Outro caso negativo",
+      "description": "Fornecer entradas inválidas ou inesperadas que devem acionar o tratamento de erros ou a rejeição pela API."
+    },
+    {
+      "id": 5596079,
+      "name": "Nulo",
+      "description": "Deve ser o literal JSON `null` (não vazio, não \"null\")."
+    },
+    {
+      "id": 5596080,
+      "name": "Zero",
+      "description": "Deve ser o literal numérico 0."
+    },
+    {
+      "id": 5596081,
+      "name": "Valores vazios",
+      "description": "Deve ser \"\"."
+    },
+    {
+      "id": 5596082,
+      "name": "Valores máximos",
+      "description": "Fornecer os valores mínimo e máximo permitidos exatos para campos numéricos ou de data."
+    },
+    {
+      "id": 5596083,
+      "name": "Valores mínimos",
+      "description": "Fornecer os valores mínimo e máximo permitidos exatos para campos numéricos ou de data."
+    },
+    {
+      "id": 5596084,
+      "name": "Estouro",
+      "description": "Fornecer valores logo além dos limites mínimo ou máximo permitidos."
+    },
+    {
+      "id": 5596085,
+      "name": "Subfluxo",
+      "description": "Fornecer valores logo além dos limites mínimo ou máximo permitidos."
+    },
+    {
+      "id": 5596086,
+      "name": "Strings muito longas",
+      "description": "Fornecer strings mais longas que o comprimento máximo permitido ou mais curtas que o comprimento mínimo exigido."
+    },
+    {
+      "id": 5596087,
+      "name": "Strings muito curtas",
+      "description": "Fornecer strings mais longas que o comprimento máximo permitido ou mais curtas que o comprimento mínimo exigido."
+    },
+    {
+      "id": 5596088,
+      "name": "Autorização em nível de objeto comprometida",
+      "description": "Usuários acessam ou manipulam objetos de dados sem a devida autorização."
+    },
+    {
+      "id": 5596089,
+      "name": "Controle de acesso",
+      "description": "Restringir os recursos e as ações que os usuários podem acessar com base em papéis, permissões ou atributos."
+    },
+    {
+      "id": 5596090,
+      "name": "Falhas de autenticação",
+      "description": "A autenticação é fraca, está mal configurada ou foi contornada, permitindo acesso não autorizado."
+    },
+    {
+      "id": 5596091,
+      "name": "Injeção SQL",
+      "description": "Inserir código SQL malicioso nas entradas para testar vulnerabilidades de injeção SQL."
+    },
+    {
+      "id": 5596092,
+      "name": "Injeção XSS",
+      "description": "Injetar JavaScript ou tags HTML para testar vulnerabilidades de XSS."
+    },
+    {
+      "id": 5596093,
+      "name": "Entrada fuzz",
+      "description": "Enviar cargas úteis grandes ou geradas aleatoriamente para testar validação de entrada e estabilidade."
+    },
+    {
+      "id": 5596094,
+      "name": "Injeção de comandos",
+      "description": "Inserir comandos de shell nas entradas para testar vulnerabilidades de execução de comandos."
+    },
+    {
+      "id": 5596095,
+      "name": "Injeção JSON",
+      "description": "Inserir estruturas JSON maliciosas ou inesperadas para testar análise e validação."
+    },
+    {
+      "id": 5596096,
+      "name": "Injeção NoSQL",
+      "description": "Fornecer consultas ou operadores específicos de NoSQL para testar injeção."
+    },
+    {
+      "id": 5596097,
+      "name": "Outros",
+      "description": "Casos não classificados nas categorias existentes."
+    }
+  ],
+  "projectAssociations": [],
+  "moduleSettings": [
+    {
+      "id": "1228008",
+      "name": "Módulo predefinido",
+      "description": "",
+      "moduleVariables": [],
+      "openApiInfo": {}
+    }
+  ]
+}
