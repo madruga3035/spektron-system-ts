@@ -21,10 +21,10 @@ export class AuthController {
       return res.status(401).json({ error: "E-mail ou senha inválidos." });
     }
 
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1d' });
+    const token = jwt.sign({ userId: user.id, role: user.role }, SECRET_KEY, { expiresIn: '1d' });
 
     return res.json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
       token,
     });
   }

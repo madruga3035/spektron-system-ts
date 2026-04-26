@@ -1,10 +1,27 @@
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { prisma } from '../lib/prisma.js';
 import bcrypt from 'bcrypt';
 
 export class UserController {
+  async index(req: Request, res: Response) {
+    try {
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          createdAt: true
+        }
+      });
+      
+      return res.json(users);
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao listar usuários." });
+    }
+  }
   async store(req: Request, res: Response) {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     try {
       // Verificar se o usuário já existe
@@ -16,7 +33,7 @@ export class UserController {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = await prisma.user.create({
-        data: { name, email, password: hashedPassword },
+        data: { name, email, password: hashedPassword, role: role || 'USER' }
       });
 
       // Removemos a senha do retorno por segurança
