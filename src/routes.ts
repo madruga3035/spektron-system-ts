@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { SPEKTRON_BANNER } from './utils/banner.js';
 import { UserController } from './controllers/UserController.js';
 import { AuthController } from './controllers/AuthController.js';
 import { RecordController } from './controllers/RecordController.js';
@@ -6,11 +7,18 @@ import { authMiddleware } from './middlewares/auth.js';
 import { dailyTokenMiddleware } from './middlewares/dailyToken.js';
 import { checkRole } from './middlewares/checkRole.js';
 
+
 const routes = Router();
 
 const userController = new UserController();
 const authController = new AuthController();
 const recordController = new RecordController();
+
+// --- Rota Raiz com Banner ---
+routes.get('/', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send(SPEKTRON_BANNER);
+});
 
 // --- Rotas Públicas ---
 routes.post('/register', dailyTokenMiddleware, userController.store);
