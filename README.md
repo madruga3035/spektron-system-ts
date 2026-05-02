@@ -47,7 +47,7 @@ A API implementa múltiplos níveis de proteção:
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/seu-usuario/spektron-system-ts.git](https://github.com/seu-usuario/spektron-system-ts.git)
+   git clone https://github.com/madruga3035/spektron-system-ts.git
 
 2. **Instale as dependências:**
 npm install
