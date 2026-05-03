@@ -6,6 +6,7 @@ import { RecordController } from './controllers/RecordController.js';
 import { authMiddleware } from './middlewares/auth.js';
 import { dailyTokenMiddleware } from './middlewares/dailyToken.js';
 import { checkRole } from './middlewares/checkRole.js';
+import { SetupController } from './controllers/SetupController.js';
 
 
 const routes = Router();
@@ -13,6 +14,7 @@ const routes = Router();
 const userController = new UserController();
 const authController = new AuthController();
 const recordController = new RecordController();
+const setupController = new SetupController();
 
 // --- Rota Raiz com Banner ---
 routes.get('/', (req, res) => {
@@ -22,6 +24,7 @@ routes.get('/', (req, res) => {
 
 // --- Rotas Públicas ---
 routes.post('/register', dailyTokenMiddleware, userController.store);
+routes.post('/setup', setupController.init);
 routes.post('/login', authController.authenticate);
 
 // --- Filtro de Autenticação Global ---
