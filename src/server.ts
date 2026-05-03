@@ -3,7 +3,7 @@ import { routes } from './routes.js';
 
 const app = express();
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(routes); // Aqui ele carrega todas as rotas que definimos
