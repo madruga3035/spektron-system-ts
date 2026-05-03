@@ -20,6 +20,8 @@ RUN npx prisma generate
 # 5. Build do TypeScript (se você estiver usando)
 RUN npm run build --if-present
 
+RUN npm install -g ts-node typescript
+
 EXPOSE 3000
 
 CMD ["npm", "start"]
