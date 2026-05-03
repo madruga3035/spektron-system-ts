@@ -22,6 +22,8 @@ RUN npm run build --if-present
 
 RUN npm install -g ts-node typescript
 
+RUN npm install tsx
+
 EXPOSE 3000
 
 CMD ["npm", "start"]

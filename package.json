@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts", 
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/server.ts",
-    "dev": "node --import tsx --watch src/server.ts",
+    "start": "npx tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "token": "node tests/generate-token.js",
     "postinstall": "prisma generate"
   },
