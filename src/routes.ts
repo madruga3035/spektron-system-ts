@@ -23,7 +23,7 @@ routes.get('/', (req, res) => {
 });
 
 // --- Rotas Públicas ---
-routes.post('/register', dailyTokenMiddleware, userController.store);
+//routes.post('/register', dailyTokenMiddleware, userController.store);
 routes.post('/setup', setupController.init);
 routes.post('/login', authController.authenticate);
 
