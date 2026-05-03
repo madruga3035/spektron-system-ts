@@ -64,3 +64,6 @@ npx prisma db push
 npm run dev
 
 **Desenvolvido por Marcos como parte do ecossistema Spektron/Master Inspect.**
+
+## Licença
+> Este projeto está sob a licença [NOME DA LICENÇA] - consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
