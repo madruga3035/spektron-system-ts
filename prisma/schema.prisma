@@ -39,3 +39,10 @@ model DataRecord {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
 }
+
+model SystemConfig {
+  id            String    @id @default(uuid())
+  setupDone     Boolean   @default(false)
+  activationKey String    @unique
+  createdAt     DateTime  @default(now())
+}

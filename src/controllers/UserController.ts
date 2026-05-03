@@ -20,6 +20,30 @@ export class UserController {
       return res.status(500).json({ error: "Erro ao listar usuários." });
     }
   }
+
+  async createByAdmin(req: Request, res: Response) {
+    const { name, email, password, role } = req.body;
+
+    try {
+      // Como o middleware 'checkRole' já validou que quem chama é ADMIN,
+      // apenas executamos a criação sem precisar de tokens diários.
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newUser = await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+          role: role || 'USER' // O Admin define o cargo do novo funcionário
+        }
+      });
+
+      const { password: _, ...userWithoutPassword } = newUser;
+      return res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      return res.status(400).json({ error: "E-mail já cadastrado ou dados inválidos." });
+    }
+  }
   async store(req: Request, res: Response) {
     const { name, email, password, role } = req.body;
 
@@ -103,4 +127,5 @@ export class UserController {
       return res.status(500).json({ error: "Erro ao desativar usuário." });
     }
   }
+
 }
