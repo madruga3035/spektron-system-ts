@@ -21,12 +21,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/spektron-system-ts
-            git pull origin main
-            docker build -t spektron-api .
+            git fetch origin main
+            git reset --hard origin/main
+            docker build --no-cache -t spektron-api .  # <--- ESSA LINHA É A CHAVE
             docker rm -f spektron-app || true
-            docker run -d --name spektron-app \
-              -p 3000:3000 \
-              -e TZ=America/Sao_Paulo \
-              --env-file .env \
-              --restart always \
-              spektron-api
+            docker run -d --name spektron-app -p 3000:3000 --env-file .env --restart always spektron-api
