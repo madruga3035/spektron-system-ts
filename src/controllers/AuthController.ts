@@ -9,8 +9,7 @@ export class AuthController {
   async authenticate(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({ where: { email } });
-    console.log( user)
+    const user = await prisma.user.findUnique({ where: { email } })
 
     if (!user) {
       return res.status(401).json({ error: "E-mail ou senha inválidos." });
