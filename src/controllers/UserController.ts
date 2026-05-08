@@ -123,9 +123,12 @@ export class UserController {
       });
 
       return res.status(204).send();
-    } catch (error) {
-      return res.status(500).json({ error: "Erro ao desativar usuário." });
+    } catch (error: any) {
+        // Se o Prisma não achar o ID, ele lança o código P2025
+        if (error.code === 'P2025') {
+            return res.status(404).json({ error: "Usuário não encontrado." });
+        }
+        return res.status(500).json({ error: "Erro ao desativar usuário." });
     }
   }
-
 }

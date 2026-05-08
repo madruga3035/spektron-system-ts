@@ -10,9 +10,13 @@ export class AuthController {
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({ where: { email } });
+    console.log( user)
 
     if (!user) {
       return res.status(401).json({ error: "E-mail ou senha inválidos." });
+    }
+    if (user.role === 'INACTIVE' || user.deletedAt !== null) {
+      return res.status(403).json({ error: "Usuário inativo. Contate o administrador." });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
